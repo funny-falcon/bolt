@@ -175,7 +175,9 @@ func (f *freelist) read(p *page) {
 		copy(f.ids, ids)
 
 		// Make sure they're sorted.
-		sort.Sort(pgids(f.ids))
+		if !pgids(f.ids).isSorted() {
+			sort.Sort(pgids(f.ids))
+		}
 	}
 
 	// Rebuild the page cache.
